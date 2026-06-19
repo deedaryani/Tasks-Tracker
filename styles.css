@@ -1,0 +1,372 @@
+:root {
+  --backgroundColor: #0F0F11;
+  --cardColor: #19191D;
+  --cardColorLight: #222228;
+  --borderColor: rgba(255,255,255,0.08);
+  --borderColorHover: rgba(255,255,255,0.22);
+  --textColor: #F2F2F0;
+  --textColorGray: #71717A;
+  --textColorDark: #3F3F46;
+  --purpleColor: #7C6EFA;
+  --purpleColorGlow: rgba(124,110,250,0.18);
+  --purpleColorDark: #6355E0;
+  --redColor: #F87171;
+  --redColorBackground: rgba(248,113,113,0.10);
+  --greenColor: #34D399;
+  --borderRadius: 8px;
+  --borderRadiusBig: 12px;
+  --borderRadiusHuge: 16px;
+  --myFont: 'Inter', system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --backgroundColor: #F4F4F6;
+    --cardColor: #FFFFFF;
+    --cardColorLight: #F0F0F4;
+    --borderColor: rgba(0,0,0,0.08);
+    --borderColorHover: rgba(0,0,0,0.22);
+    --textColor: #111113;
+    --textColorGray: #888890;
+    --textColorDark: #D4D4D8;
+    --purpleColorGlow: rgba(124,110,250,0.12);
+    --redColorBackground: rgba(239,68,68,0.08);
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--backgroundColor);
+  color: var(--textColor);
+  font-family: var(--myFont);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px 80px;
+}
+
+.mainContainer {
+  width: 100%;
+  max-width: 600px;
+  padding-top: clamp(32px, 8vw, 72px);
+}
+
+/* header styling */
+.myHeader {
+  margin-bottom: 32px;
+}
+.headerTopRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.smallTopLabel {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--purpleColor);
+  margin-bottom: 6px;
+}
+h1 {
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1;
+  color: var(--textColor);
+}
+.progressRingWrapper {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.progressRingLabel {
+  font-size: 11px;
+  color: var(--textColorGray);
+  letter-spacing: .04em;
+}
+svg.progressRingSvg {
+  width: 52px; height: 52px;
+  transform: rotate(-90deg);
+}
+.progressRingBackground { fill: none; stroke: var(--textColorDark); stroke-width: 4; }
+.progressRingFill       { fill: none; stroke: var(--purpleColor); stroke-width: 4; stroke-linecap: round; transition: stroke-dashoffset .4s cubic-bezier(.4,0,.2,1); }
+.progressRingPercentText {
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--textColor);
+  transform: rotate(90deg);
+  transform-origin: center;
+  dominant-baseline: middle;
+  text-anchor: middle;
+}
+
+/* stats pills at the top */
+.statsRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.statsPill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--cardColor);
+  border: 1px solid var(--borderColor);
+  border-radius: 99px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--textColorGray);
+}
+.statsPill .colorDot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+}
+.colorDotPending { background: var(--textColorGray); }
+.colorDotDone    { background: var(--greenColor); }
+.statsPill strong { color: var(--textColor); font-weight: 500; }
+
+/* the add task box */
+.addTaskBox {
+  background: var(--cardColor);
+  border: 1px solid var(--borderColor);
+  border-radius: var(--borderRadiusHuge);
+  padding: 12px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.addTaskBox:focus-within {
+  border-color: var(--purpleColor);
+  box-shadow: 0 0 0 3px var(--purpleColorGlow);
+}
+.addTaskPlusIcon {
+  width: 36px; height: 36px;
+  border-radius: var(--borderRadius);
+  background: var(--purpleColorGlow);
+  border: 1px solid rgba(124,110,250,.25);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--purpleColor);
+  font-size: 20px;
+}
+#taskInputField {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--myFont);
+  font-size: 15px;
+  color: var(--textColor);
+  padding: 4px 0;
+  min-width: 0;
+}
+#taskInputField::placeholder { color: var(--textColorGray); }
+.addTaskButton {
+  height: 36px;
+  padding: 0 16px;
+  background: var(--purpleColor);
+  color: #fff;
+  border: none;
+  border-radius: var(--borderRadius);
+  font-family: var(--myFont);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .12s, transform .08s;
+  flex-shrink: 0;
+}
+.addTaskButton:hover  { background: var(--purpleColorDark); }
+.addTaskButton:active { transform: scale(.96); }
+
+.errorMessage {
+  font-size: 12px;
+  color: var(--redColor);
+  min-height: 20px;
+  padding: 0 4px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.errorMessage::before {
+  content: '';
+  display: inline-block;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--redColor);
+  opacity: 0;
+}
+.errorMessage.showError::before { opacity: 1; }
+
+/* section headings above the lists */
+.sectionHeading {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--textColorGray);
+  margin-bottom: 8px;
+  padding: 0 2px;
+}
+
+/* the actual task list */
+#todoList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* each task row */
+.taskItem {
+  background: var(--cardColor);
+  border: 1px solid var(--borderColor);
+  border-radius: var(--borderRadiusBig);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 12px 14px 14px;
+  transition: border-color .15s, opacity .2s, transform .15s;
+  animation: popIn .2s cubic-bezier(.34,1.56,.64,1);
+}
+.taskItem:hover { border-color: var(--borderColorHover); }
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.97) translateY(-4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.taskItem.completedTask { opacity: .5; }
+.taskItem.completedTask:hover { opacity: .7; }
+
+/* round checkbox */
+.taskCheckbox {
+  appearance: none;
+  width: 20px; height: 20px;
+  min-width: 20px;
+  border: 1.5px solid var(--textColorDark);
+  border-radius: 50%;
+  cursor: pointer;
+  background: transparent;
+  transition: background .12s, border-color .12s;
+  position: relative;
+  flex-shrink: 0;
+}
+.taskCheckbox:hover { border-color: var(--purpleColor); }
+.taskCheckbox:checked {
+  background: var(--purpleColor);
+  border-color: var(--purpleColor);
+}
+.taskCheckbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px; top: 2px;
+  width: 6px; height: 10px;
+  border: 2px solid #fff;
+  border-top: none; border-left: none;
+  transform: rotate(45deg);
+}
+
+.taskText {
+  flex: 1;
+  font-size: 15px;
+  line-height: 1.5;
+  word-break: break-word;
+  color: var(--textColor);
+}
+.taskItem.completedTask .taskText {
+  text-decoration: line-through;
+  color: var(--textColorGray);
+}
+
+/* edit mode input box */
+.taskEditInputBox {
+  flex: 1;
+  border: none;
+  border-bottom: 1.5px solid var(--purpleColor);
+  background: transparent;
+  font-family: var(--myFont);
+  font-size: 15px;
+  color: var(--textColor);
+  outline: none;
+  padding: 2px 0;
+}
+.taskEditInputBox.inputHasError { border-bottom-color: var(--redColor); }
+
+/* edit and delete buttons */
+.taskButtonsGroup {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity .12s;
+}
+.taskItem:hover .taskButtonsGroup,
+.taskItem:focus-within .taskButtonsGroup { opacity: 1; }
+
+.iconButton {
+  width: 30px; height: 30px;
+  border: 1px solid transparent;
+  border-radius: var(--borderRadius);
+  background: transparent;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .1s, border-color .1s, color .1s;
+  color: var(--textColorGray);
+  font-size: 16px;
+  line-height: 1;
+}
+.iconButton:hover { background: var(--cardColorLight); border-color: var(--borderColor); color: var(--textColor); }
+.iconButton.deleteButton:hover { background: var(--redColorBackground); border-color: var(--redColor); color: var(--redColor); }
+.iconButton.saveButton:hover   { background: var(--purpleColorGlow); border-color: var(--purpleColor); color: var(--purpleColor); }
+
+.taskItem.isBeingEdited .taskButtonsGroup { opacity: 1; }
+
+/* completed tasks section */
+#completedSection { margin-top: 24px; }
+#completedList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* empty state when no tasks */
+.emptyStateBox {
+  background: var(--cardColor);
+  border: 1px dashed var(--textColorDark);
+  border-radius: var(--borderRadiusHuge);
+  padding: 48px 24px;
+  text-align: center;
+}
+.emptyStateIcon {
+  width: 48px; height: 48px;
+  background: var(--cardColorLight);
+  border-radius: var(--borderRadiusBig);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 22px;
+  color: var(--textColorGray);
+}
+.emptyStateBox h3 { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+.emptyStateBox p  { font-size: 13px; color: var(--textColorGray); line-height: 1.6; }
+
+/* responsiveness */
+@media (max-width: 480px) {
+  .addTaskButton { padding: 0 12px; font-size: 12px; }
+  .taskItem { gap: 10px; padding: 12px 10px 12px 12px; }
+  .taskButtonsGroup { opacity: 1; }
+  .statsPill { font-size: 11px; padding: 4px 10px; }
+}
+
+/* reset */
+menu { list-style: none; padding: 0; margin: 0; }
+menu li { display: contents; }
+figure { margin: 0; }

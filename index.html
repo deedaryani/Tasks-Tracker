@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tasks Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<main class="mainContainer">
+
+  <header class="myHeader">
+    <hgroup class="headerTopRow">
+      <section class="titleSection">
+        <p class="smallTopLabel">My workspace</p>
+        <h1>Tasks Tracker</h1>
+      </section>
+      <figure class="progressRingWrapper">
+        <svg class="progressRingSvg" viewBox="0 0 52 52" aria-hidden="true">
+          <circle class="progressRingBackground" cx="26" cy="26" r="22"/>
+          <circle class="progressRingFill" id="progressRingFill" cx="26" cy="26" r="22"
+            stroke-dasharray="138.2" stroke-dashoffset="138.2"/>
+          <text class="progressRingPercentText" x="26" y="26" id="progressRingPercentText">0%</text>
+        </svg>
+        <figcaption class="progressRingLabel">done</figcaption>
+      </figure>
+    </hgroup>
+    <nav class="statsRow" aria-label="Task stats">
+      <p class="statsPill"><span class="colorDot colorDotPending"></span><strong id="pendingCount">0</strong> pending</p>
+      <p class="statsPill"><span class="colorDot colorDotDone"></span><strong id="completedCount">0</strong> completed</p>
+    </nav>
+  </header>
+
+  <form class="addTaskBox" id="addTaskForm">
+    <span class="addTaskPlusIcon" aria-hidden="true">+</span>
+    <input type="text" id="taskInputField" placeholder="What needs to be done?" maxlength="200" autocomplete="off" />
+    <button type="submit" class="addTaskButton" id="addTaskButton">Add</button>
+  </form>
+  <p class="errorMessage" id="errorMessage" role="alert"></p>
+
+  <section id="pendingSection">
+    <h2 class="sectionHeading" id="pendingSectionLabel" style="display:none">To do</h2>
+    <ul id="todoList" aria-label="Pending tasks"></ul>
+  </section>
+
+  <section id="completedSection" style="display:none">
+    <h2 class="sectionHeading">Completed</h2>
+    <ul id="completedList" aria-label="Completed tasks"></ul>
+  </section>
+
+</main>
+
+<script src="tasks.js"></script>
+</body>
+</html>
