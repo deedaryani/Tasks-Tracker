@@ -370,3 +370,118 @@ svg.progressRingSvg {
 menu { list-style: none; padding: 0; margin: 0; }
 menu li { display: contents; }
 figure { margin: 0; }
+
+/* ===== authorisation screen ===== */
+.authContainer {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.authCard {
+  width: 100%;
+  max-width: 340px;
+  background: var(--cardColor);
+  border: 1px solid var(--borderColor);
+  border-radius: var(--borderRadiusHuge);
+  padding: 28px 24px;
+}
+.authHeading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  margin: 6px 0 4px;
+}
+.authSubtext {
+  font-size: 13px;
+  color: var(--textColorGray);
+  margin-bottom: 20px;
+}
+.authForm {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.authLabel {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--textColorGray);
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+.authInput {
+  background: var(--cardColorLight);
+  border: 1px solid var(--borderColor);
+  border-radius: var(--borderRadius);
+  padding: 10px 12px;
+  font-family: var(--myFont);
+  font-size: 14px;
+  color: var(--textColor);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.authInput:focus {
+  border-color: var(--purpleColor);
+  box-shadow: 0 0 0 3px var(--purpleColorGlow);
+}
+.authForm .errorMessage {
+  margin-top: 10px;
+  margin-bottom: 0;
+  padding: 0;
+}
+.authSubmitButton {
+  margin-top: 18px;
+  height: 40px;
+  background: var(--purpleColor);
+  color: #fff;
+  border: none;
+  border-radius: var(--borderRadius);
+  font-family: var(--myFont);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .12s, transform .08s;
+}
+.authSubmitButton:hover  { background: var(--purpleColorDark); }
+.authSubmitButton:active { transform: scale(.98); }
+
+.authSwitchRow {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--textColorGray);
+}
+.authSwitchButton {
+  background: none;
+  border: none;
+  color: var(--purpleColor);
+  font-family: var(--myFont);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 4px;
+  padding: 0;
+}
+.authSwitchButton:hover { text-decoration: underline; }
+
+/* user pill / logout button in the header stats row */
+.userPill {
+  cursor: pointer;
+  border: 1px solid var(--borderColor);
+  background: var(--cardColor);
+  font-family: var(--myFont);
+  transition: border-color .12s, color .12s;
+}
+.userPill:hover {
+  border-color: var(--redColor);
+  color: var(--redColor);
+}
+.userPill #loggedInUsername {
+  color: var(--textColor);
+  font-weight: 500;
+}
+.userPill:hover #loggedInUsername { color: var(--redColor); }

@@ -10,7 +10,34 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<main class="mainContainer">
+
+<!-- authorisation screen: shown when nobody is logged in -->
+<main class="authContainer" id="authContainer">
+  <section class="authCard">
+    <p class="smallTopLabel">Tasks Tracker</p>
+    <h1 class="authHeading" id="authHeading">Log in</h1>
+    <p class="authSubtext" id="authSubtext">Log in to see your tasks.</p>
+
+    <form class="authForm" id="authForm">
+      <label class="authLabel" for="authUsernameField">Username</label>
+      <input type="text" id="authUsernameField" class="authInput" autocomplete="username" maxlength="30" />
+
+      <label class="authLabel" for="authPasswordField">Password</label>
+      <input type="password" id="authPasswordField" class="authInput" autocomplete="current-password" maxlength="100" />
+
+      <p class="errorMessage" id="authErrorMessage" role="alert"></p>
+
+      <button type="submit" class="authSubmitButton" id="authSubmitButton">Log in</button>
+    </form>
+
+    <p class="authSwitchRow">
+      <span id="authSwitchText">Don't have an account?</span>
+      <button type="button" class="authSwitchButton" id="authSwitchButton">Sign up</button>
+    </p>
+  </section>
+</main>
+
+<main class="mainContainer" id="appContainer" style="display:none">
 
   <header class="myHeader">
     <hgroup class="headerTopRow">
@@ -31,6 +58,9 @@
     <nav class="statsRow" aria-label="Task stats">
       <p class="statsPill"><span class="colorDot colorDotPending"></span><strong id="pendingCount">0</strong> pending</p>
       <p class="statsPill"><span class="colorDot colorDotDone"></span><strong id="completedCount">0</strong> completed</p>
+      <button type="button" class="statsPill userPill" id="logoutButton" title="Log out">
+        <span id="loggedInUsername">user</span> · Log out
+      </button>
     </nav>
   </header>
 
@@ -54,5 +84,6 @@
 </main>
 
 <script src="tasks.js"></script>
+<script src="auth.js"></script>
 </body>
 </html>

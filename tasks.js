@@ -1,6 +1,8 @@
-/* load saved tasks from localStorage if there are any */
-let myTaskList = JSON.parse(localStorage.getItem('myTaskList')) || [];
-let taskIdCounter = JSON.parse(localStorage.getItem('taskIdCounter')) || 1;
+/* tasks are loaded per logged-in user once auth.js calls initTasksApp() */
+let myTaskList = [];
+let taskIdCounter = 1;
+let taskListStorageKey = null;
+let taskIdCounterStorageKey = null;
 
 /* grab all the elements i need from the page */
 const taskInputField       = document.getElementById('taskInputField');
@@ -202,8 +204,9 @@ function updateThePage() {
 
 /* save the current task list to localStorage so it survives a page refresh */
 function saveToLocalStorage() {
-  localStorage.setItem('myTaskList', JSON.stringify(myTaskList));
-  localStorage.setItem('taskIdCounter', JSON.stringify(taskIdCounter));
+  if (!taskListStorageKey) return;
+  localStorage.setItem(taskListStorageKey, JSON.stringify(myTaskList));
+  localStorage.setItem(taskIdCounterStorageKey, JSON.stringify(taskIdCounter));
 }
 
 function showErrorMessage(message) {
@@ -225,6 +228,22 @@ document.getElementById('addTaskForm').addEventListener('submit', function(e) {
 });
 taskInputField.addEventListener('input', hideErrorMessage);
 
-/* draw the page for the first time when it loads */
-updateThePage();
-taskInputField.focus();
+/* called by auth.js once a user is logged in, so each account gets its own tasks */
+function initTasksApp(username) {
+  taskListStorageKey = 'myTaskList_' + username;
+  taskIdCounterStorageKey = 'taskIdCounter_' + username;
+
+  myTaskList = JSON.parse(localStorage.getItem(taskListStorageKey)) || [];
+  taskIdCounter = JSON.parse(localStorage.getItem(taskIdCounterStorageKey)) || 1;
+
+  updateThePage();
+  taskInputField.focus();
+}
+
+/* called by auth.js on logout so a new login doesn't inherit the old state */
+function resetTasksApp() {
+  myTaskList = [];
+  taskIdCounter = 1;
+  taskListStorageKey = null;
+  taskIdCounterStorageKey = null;
+}
